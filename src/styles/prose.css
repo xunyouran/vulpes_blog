@@ -1,0 +1,93 @@
+/* Prose overrides for dark mode and code blocks */
+
+/* --- Shiki dual-theme code block support --- */
+.astro-code,
+.astro-code span {
+  color: var(--shiki-light) !important;
+  background-color: var(--shiki-light-bg) !important;
+}
+
+html.dark .astro-code,
+html.dark .astro-code span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
+}
+
+/* Prevent background artifacts on individual spans in dark mode */
+html.dark .astro-code span {
+  background-color: transparent !important;
+}
+
+/* --- Code block wrapper --- */
+.astro-code {
+  @apply rounded-lg border border-[var(--color-border)] my-6 p-4 text-sm leading-relaxed;
+  overflow-x: auto;
+}
+
+/* --- Inline code within prose --- */
+.prose :not(pre) > code {
+  @apply bg-[var(--color-code-bg)] text-[var(--color-text-primary)] px-1.5 py-0.5 rounded text-sm font-mono;
+}
+
+/* --- Prose dark mode --- */
+html.dark .prose {
+  @apply prose-invert;
+}
+
+/* --- Prose base tweaks --- */
+.prose {
+  @apply max-w-none;
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+  @apply text-[var(--color-text-primary)] font-bold;
+}
+
+.prose h2 {
+  @apply mt-10 mb-4 pb-2 border-b border-[var(--color-border)];
+}
+
+.prose p {
+  @apply text-[var(--color-text-secondary)] leading-relaxed;
+}
+
+.prose ul,
+.prose ol {
+  @apply text-[var(--color-text-secondary)];
+}
+
+.prose blockquote {
+  @apply border-l-4 border-[var(--color-accent)] bg-[var(--color-bg-secondary)]
+         not-italic text-[var(--color-text-secondary)] py-1 px-4 my-6;
+}
+
+.prose table {
+  @apply w-full border-collapse text-sm;
+}
+
+.prose th {
+  @apply bg-[var(--color-bg-secondary)] text-[var(--color-text-primary)] font-semibold
+         px-4 py-2 border border-[var(--color-border)] text-left;
+}
+
+.prose td {
+  @apply px-4 py-2 border border-[var(--color-border)] text-[var(--color-text-secondary)];
+}
+
+.prose img {
+  @apply rounded-lg;
+}
+
+.prose strong {
+  @apply text-[var(--color-text-primary)];
+}
+
+.prose hr {
+  @apply border-[var(--color-border)];
+}

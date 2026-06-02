@@ -1,0 +1,52 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+export interface Props {
+  prev?: CollectionEntry<'blog'>;
+  next?: CollectionEntry<'blog'>;
+}
+
+const { prev, next } = Astro.props;
+---
+
+{
+  (prev || next) && (
+    <nav class="mt-12 pt-8 border-t border-[var(--color-border)]">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <!-- Previous post (older) -->
+        {prev ? (
+          <a
+            href={`/blog/${prev.id}`}
+            class="group flex flex-col p-4 rounded-lg border border-[var(--color-border)] hover:border-[var(--color-accent)] transition-colors"
+          >
+            <span class="text-xs text-[var(--color-text-tertiary)] mb-1">
+              &larr; 上一篇
+            </span>
+            <span class="text-sm font-medium text-[var(--color-text-primary)] group-hover:text-[var(--color-accent)] transition-colors line-clamp-1">
+              {prev.data.title}
+            </span>
+          </a>
+        ) : (
+          <div />
+        )}
+
+        {/* Next post (newer) */}
+        {next ? (
+          <a
+            href={`/blog/${next.id}`}
+            class="group flex flex-col p-4 rounded-lg border border-[var(--color-border)] hover:border-[var(--color-accent)] transition-colors text-right"
+          >
+            <span class="text-xs text-[var(--color-text-tertiary)] mb-1">
+              下一篇 &rarr;
+            </span>
+            <span class="text-sm font-medium text-[var(--color-text-primary)] group-hover:text-[var(--color-accent)] transition-colors line-clamp-1">
+              {next.data.title}
+            </span>
+          </a>
+        ) : (
+          <div />
+        )}
+      </div>
+    </nav>
+  )
+}

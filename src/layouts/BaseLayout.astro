@@ -1,0 +1,104 @@
+---
+import { ViewTransitions } from 'astro:transitions';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION, SITE_URL, AUTHOR_NAME } from '../consts';
+import themeScript from '../scripts/theme.ts?raw';
+import '../styles/global.css';
+
+export interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  canonicalURL?: string;
+  type?: 'website' | 'article';
+}
+
+const {
+  title,
+  description = SITE_DESCRIPTION,
+  image,
+  canonicalURL,
+  type = 'website',
+} = Astro.props;
+
+const ogImage = image || `${SITE_URL}/og-image.png`;
+const pageUrl = canonicalURL || new URL(Astro.url.pathname, SITE_URL).href;
+---
+
+<!doctype html>
+<html lang="zh-CN" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" href="/favicon.ico" />
+
+    <!-- View Transitions for SPA-like navigation -->
+    <ViewTransitions fallback="animate" />
+
+    <!--
+      Dark mode FOUC protection: runs synchronously before first paint.
+      The is:inline directive embeds the script content directly in the HTML.
+    -->
+    <script is:inline set:html={themeScript}></script>
+
+    <!-- Primary Meta Tags -->
+    <title>{title} — {SITE_TITLE}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={pageUrl} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={`${title} — ${SITE_TITLE}`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:site_name" content={SITE_TITLE} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={`${title} — ${SITE_TITLE}`} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- RSS Discovery -->
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={`${SITE_TITLE} RSS Feed`}
+      href="/rss.xml"
+    />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" is:inline>
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": {JSON.stringify(SITE_TITLE)},
+        "url": {JSON.stringify(SITE_URL)},
+        "description": {JSON.stringify(SITE_DESCRIPTION)},
+        "author": {
+          "@type": "Person",
+          "name": {JSON.stringify(AUTHOR_NAME)},
+          "url": {JSON.stringify(SITE_URL)}
+        }
+      }
+    </script>
+  </head>
+
+  <body
+    class="bg-[var(--color-bg-primary)] text-[var(--color-text-primary)]
+           transition-colors duration-300 min-h-screen flex flex-col"
+  >
+    <Header />
+
+    <main class="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <slot />
+    </main>
+
+    <Footer />
+  </body>
+</html>

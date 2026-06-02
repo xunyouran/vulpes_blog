@@ -1,0 +1,42 @@
+---
+import { getCollection, render } from 'astro:content';
+import PostLayout from '../../layouts/PostLayout.astro';
+import PostNavigation from '../../components/PostNavigation.astro';
+import { calculateReadingTime } from '../../utils/readingTime';
+import { getPublishedPosts } from '../../utils/posts';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  const published = getPublishedPosts(posts);
+
+  return published.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const readingTime = calculateReadingTime(post.body || '');
+
+// Find prev/next for navigation (among published posts only)
+const allPosts = getPublishedPosts(await getCollection('blog'));
+const currentIndex = allPosts.findIndex((p) => p.id === post.id);
+const prev = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : undefined;
+const next = currentIndex > 0 ? allPosts[currentIndex - 1] : undefined;
+---
+
+<PostLayout
+  title={post.data.title}
+  description={post.data.description}
+  pubDate={post.data.pubDate}
+  updatedDate={post.data.updatedDate}
+  tags={post.data.tags}
+  readingTime={readingTime}
+  image={post.data.heroImage}
+  canonicalURL={post.data.canonicalURL}
+>
+  <Content />
+  <PostNavigation {prev} {next} />
+</PostLayout>

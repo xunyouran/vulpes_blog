@@ -1,0 +1,64 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import TagBadge from './TagBadge.astro';
+import { formatDate } from '../utils/date';
+
+export interface Props {
+  post: CollectionEntry<'blog'>;
+  showExcerpt?: boolean;
+}
+
+const { post, showExcerpt = true } = Astro.props;
+const { title, description, pubDate, tags, heroImage, heroImageAlt } = post.data;
+---
+
+<article class="card-hover bg-[var(--color-card-bg)] border border-[var(--color-border)] rounded-xl overflow-hidden">
+  <a href={`/blog/${post.id}`} class="block p-5 sm:p-6">
+    <!-- Hero Image (optional) -->
+    {
+      heroImage && (
+        <img
+          src={heroImage}
+          alt={heroImageAlt || title}
+          class="w-full h-48 object-cover rounded-lg mb-4"
+          loading="lazy"
+          decoding="async"
+        />
+      )
+    }
+
+    <!-- Tags -->
+    {
+      tags.length > 0 && (
+        <div class="flex flex-wrap gap-1.5 mb-3">
+          {tags.slice(0, 3).map((tag) => <TagBadge tag={tag} size="sm" />)}
+          {tags.length > 3 && (
+            <span class="text-xs text-[var(--color-text-tertiary)] self-center">
+              +{tags.length - 3}
+            </span>
+          )}
+        </div>
+      )
+    }
+
+    <!-- Title -->
+    <h2 class="text-lg sm:text-xl font-semibold text-[var(--color-text-primary)] mb-2 line-clamp-2 hover:text-[var(--color-accent)] transition-colors">
+      {title}
+    </h2>
+
+    <!-- Description -->
+    {showExcerpt && (
+      <p class="text-sm text-[var(--color-text-secondary)] mb-3 line-clamp-2">
+        {description}
+      </p>
+    )}
+
+    <!-- Date -->
+    <time
+      datetime={pubDate.toISOString()}
+      class="text-xs text-[var(--color-text-tertiary)]"
+    >
+      {formatDate(pubDate)}
+    </time>
+  </a>
+</article>

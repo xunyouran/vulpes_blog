@@ -1,0 +1,18 @@
+---
+export interface Props {
+  tag: string;
+  href?: string;
+  size?: 'sm' | 'md';
+}
+
+const { tag, href, size = 'md' } = Astro.props;
+const tagHref = href || `/blog/tag/${tag.toLowerCase()}`;
+const sizeClasses = size === 'sm' ? 'text-xs px-2 py-0.5' : 'text-sm px-3 py-1';
+---
+
+<a
+  href={tagHref}
+  class="tag-badge bg-[var(--color-accent-light)] text-[var(--color-accent)] hover:bg-[var(--color-accent)] hover:text-white {sizeClasses}"
+>
+  {tag}
+</a>

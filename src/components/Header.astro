@@ -1,0 +1,94 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+import { SITE_TITLE, NAV_ITEMS } from '../consts';
+
+const currentPath = Astro.url.pathname;
+---
+
+<header
+  class="sticky top-0 z-50 bg-[var(--color-bg-primary)]/80 backdrop-blur-md border-b border-[var(--color-border)]"
+>
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav class="flex items-center justify-between h-16">
+      <!-- Logo / Brand -->
+      <a
+        href="/"
+        class="text-xl font-bold text-[var(--color-text-primary)] hover:text-[var(--color-accent)] transition-colors"
+      >
+        {SITE_TITLE}
+      </a>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden sm:flex items-center gap-1">
+        {
+          NAV_ITEMS.map((item) => {
+            const isActive = currentPath === item.href ||
+              (item.href !== '/' && currentPath.startsWith(item.href));
+            return (
+              <a
+                href={item.href}
+                class={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  isActive
+                    ? 'bg-[var(--color-accent-light)] text-[var(--color-accent)]'
+                    : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-bg-secondary)]'
+                }`}
+              >
+                {item.label}
+              </a>
+            );
+          })
+        }
+        <div class="ml-2 pl-2 border-l border-[var(--color-border)]">
+          <ThemeToggle />
+        </div>
+      </div>
+
+      <!-- Mobile: ThemeToggle + Hamburger -->
+      <div class="flex items-center gap-2 sm:hidden">
+        <ThemeToggle />
+        <button
+          id="mobile-menu-btn"
+          class="p-2 rounded-lg text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-secondary)]"
+          aria-label="展开导航菜单"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Menu (hidden by default) -->
+    <div
+      id="mobile-menu"
+      class="hidden sm:hidden border-t border-[var(--color-border)] pb-4 pt-2"
+    >
+      {
+        NAV_ITEMS.map((item) => {
+          const isActive = currentPath === item.href ||
+            (item.href !== '/' && currentPath.startsWith(item.href));
+          return (
+            <a
+              href={item.href}
+              class={`block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                isActive
+                  ? 'bg-[var(--color-accent-light)] text-[var(--color-accent)]'
+                  : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
+              }`}
+            >
+              {item.label}
+            </a>
+          );
+        })
+      }
+    </div>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  btn?.addEventListener('click', () => {
+    menu?.classList.toggle('hidden');
+  });
+</script>

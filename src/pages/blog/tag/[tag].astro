@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PostList from '../../../components/PostList.astro';
+import TagFilter from '../../../components/TagFilter.astro';
+import { getAllPosts, getPublishedPosts, getPostsByTag } from '../../../utils/posts';
+import { getAllTagsWithCounts } from '../../../utils/tags';
+
+export async function getStaticPaths() {
+  const allPosts = getPublishedPosts(await getAllPosts());
+  const allTags = getAllTagsWithCounts(allPosts);
+
+  return allTags.map(({ tag }) => ({
+    params: { tag: tag.toLowerCase() },
+    props: { tag, posts: getPostsByTag(allPosts, tag), allTags },
+  }));
+}
+
+const { tag, posts, allTags } = Astro.props;
+---
+
+<BaseLayout
+  title={`标签: ${tag}`}
+  description={`所有标记为 "${tag}" 的博客文章 — 共 ${posts.length} 篇`}
+>
+  <div class="py-4">
+    <h1 class="text-3xl sm:text-4xl font-bold text-[var(--color-text-primary)] mb-2">
+      标签: <span class="text-[var(--color-accent)]">"{tag}"</span>
+    </h1>
+    <p class="text-[var(--color-text-secondary)] mb-8">
+      共 {posts.length} 篇文章
+    </p>
+
+    <TagFilter allTags={allTags} activeTag={tag} />
+
+    <PostList posts={posts} showExcerpt={true} />
+  </div>
+</BaseLayout>

@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import PostList from '../components/PostList.astro';
+import { getAllPosts, getFeaturedPosts } from '../utils/posts';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+
+const allPosts = await getAllPosts();
+const featuredPosts = getFeaturedPosts(allPosts, 3);
+---
+
+<BaseLayout title="首页" description={SITE_DESCRIPTION}>
+  <Hero />
+
+  <section>
+    <div class="flex items-center justify-between mb-8">
+      <h2 class="text-2xl sm:text-3xl font-bold text-[var(--color-text-primary)]">
+        最新文章
+      </h2>
+      <a
+        href="/blog"
+        class="text-sm font-medium text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] transition-colors"
+      >
+        查看全部 &rarr;
+      </a>
+    </div>
+
+    <PostList posts={featuredPosts} showExcerpt={true} />
+  </section>
+</BaseLayout>

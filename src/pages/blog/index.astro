@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostList from '../../components/PostList.astro';
+import TagFilter from '../../components/TagFilter.astro';
+import { getAllPosts, getPublishedPosts } from '../../utils/posts';
+import { getAllTagsWithCounts } from '../../utils/tags';
+
+const allPosts = await getAllPosts();
+const publishedPosts = getPublishedPosts(allPosts);
+const allTags = getAllTagsWithCounts(publishedPosts);
+---
+
+<BaseLayout title="博客" description="博客全部文章，按标签筛选。">
+  <div class="py-4">
+    <h1 class="text-3xl sm:text-4xl font-bold text-[var(--color-text-primary)] mb-2">
+      博客
+    </h1>
+    <p class="text-[var(--color-text-secondary)] mb-8">
+      共 {publishedPosts.length} 篇文章
+    </p>
+
+    <TagFilter allTags={allTags} />
+
+    <PostList posts={publishedPosts} showExcerpt={true} />
+  </div>
+</BaseLayout>

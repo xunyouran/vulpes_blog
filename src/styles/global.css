@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light mode (default) */
+    --color-bg-primary: #ffffff;
+    --color-bg-secondary: #f8fafc;
+    --color-bg-tertiary: #f1f5f9;
+    --color-text-primary: #0f172a;
+    --color-text-secondary: #475569;
+    --color-text-tertiary: #94a3b8;
+    --color-accent: #3b82f6;
+    --color-accent-hover: #2563eb;
+    --color-accent-light: #eff6ff;
+    --color-border: #e2e8f0;
+    --color-card-bg: #ffffff;
+    --color-card-hover: #f8fafc;
+    --color-code-bg: #f1f5f9;
+
+    color-scheme: light dark;
+    scroll-behavior: smooth;
+  }
+
+  .dark {
+    /* Dark mode overrides */
+    --color-bg-primary: #0f172a;
+    --color-bg-secondary: #1e293b;
+    --color-bg-tertiary: #334155;
+    --color-text-primary: #f1f5f9;
+    --color-text-secondary: #94a3b8;
+    --color-text-tertiary: #64748b;
+    --color-accent: #60a5fa;
+    --color-accent-hover: #93bbfd;
+    --color-accent-light: #1e3a5f;
+    --color-border: #334155;
+    --color-card-bg: #1e293b;
+    --color-card-hover: #273548;
+    --color-code-bg: #1e293b;
+  }
+}
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-[var(--color-bg-primary)] text-[var(--color-text-primary)] transition-colors duration-300;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-bg-secondary);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-text-tertiary);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-secondary);
+  }
+
+  /* Selection styling */
+  ::selection {
+    background-color: var(--color-accent);
+    color: #ffffff;
+  }
+}
+
+@layer components {
+  /* Blog prose link styling */
+  .prose a {
+    @apply text-[var(--color-accent)] no-underline hover:underline;
+  }
+
+  /* Card hover effect */
+  .card-hover {
+    @apply transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5;
+  }
+
+  /* Tag badge base */
+  .tag-badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+           transition-colors duration-200;
+  }
+}

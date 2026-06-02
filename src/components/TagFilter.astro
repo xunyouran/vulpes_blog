@@ -1,0 +1,50 @@
+---
+export interface Props {
+  allTags: { tag: string; count: number }[];
+  activeTag?: string;
+  basePath?: string;
+}
+
+const { allTags, activeTag, basePath = '/blog' } = Astro.props;
+---
+
+<div class="mb-8">
+  <h2 class="text-sm font-semibold text-[var(--color-text-secondary)] uppercase tracking-wider mb-3">
+    按标签筛选
+  </h2>
+  <div class="flex flex-wrap gap-2">
+    <!-- "All" reset link -->
+    <a
+      href={basePath}
+      class={`tag-badge border transition-colors ${
+        !activeTag
+          ? 'bg-[var(--color-accent)] text-white border-[var(--color-accent)]'
+          : 'bg-[var(--color-card-bg)] text-[var(--color-text-secondary)] border-[var(--color-border)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]'
+      }`}
+    >
+      全部
+    </a>
+
+    <!-- Tag links -->
+    {
+      allTags.map(({ tag, count }) => {
+        const isActive = activeTag?.toLowerCase() === tag.toLowerCase();
+        return (
+          <a
+            href={`${basePath}/tag/${tag.toLowerCase()}`}
+            class={`tag-badge border transition-colors ${
+              isActive
+                ? 'bg-[var(--color-accent)] text-white border-[var(--color-accent)]'
+                : 'bg-[var(--color-card-bg)] text-[var(--color-text-secondary)] border-[var(--color-border)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]'
+            }`}
+          >
+            {tag}
+            <span class={`ml-1 text-xs ${isActive ? 'text-white/70' : 'text-[var(--color-text-tertiary)]'}`}>
+              {count}
+            </span>
+          </a>
+        );
+      })
+    }
+  </div>
+</div>

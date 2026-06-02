@@ -1,0 +1,58 @@
+---
+import { AUTHOR_NAME, AUTHOR_BIO, AUTHOR_AVATAR } from '../consts';
+
+export interface Props {
+  title?: string;
+  subtitle?: string;
+  image?: string;
+}
+
+const {
+  title = `你好，我是 ${AUTHOR_NAME} 👋`,
+  subtitle = AUTHOR_BIO,
+  image = AUTHOR_AVATAR,
+} = Astro.props;
+---
+
+<section class="py-16 sm:py-20 lg:py-24">
+  <div class="flex flex-col-reverse sm:flex-row items-center gap-8 sm:gap-12">
+    <!-- Text content -->
+    <div class="flex-1 text-center sm:text-left">
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-[var(--color-text-primary)] mb-4 leading-tight">
+        {title}
+      </h1>
+      <p class="text-lg sm:text-xl text-[var(--color-text-secondary)] leading-relaxed max-w-xl">
+        {subtitle}
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3 justify-center sm:justify-start">
+        <a
+          href="/blog"
+          class="inline-flex items-center px-6 py-3 rounded-lg bg-[var(--color-accent)] text-white font-medium
+                 hover:bg-[var(--color-accent-hover)] transition-colors shadow-sm"
+        >
+          阅读文章
+          <svg class="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+        <a
+          href="/about"
+          class="inline-flex items-center px-6 py-3 rounded-lg border border-[var(--color-border)]
+                 text-[var(--color-text-primary)] font-medium hover:bg-[var(--color-bg-secondary)] transition-colors"
+        >
+          了解更多
+        </a>
+      </div>
+    </div>
+
+    <!-- Avatar -->
+    <div class="flex-shrink-0">
+      <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-full bg-[var(--color-bg-secondary)] border-2 border-[var(--color-border)] overflow-hidden">
+        <!-- Fallback avatar with initials when no image is available -->
+        <div class="w-full h-full flex items-center justify-center text-4xl font-bold text-[var(--color-text-tertiary)] bg-[var(--color-bg-tertiary)]">
+          {AUTHOR_NAME.split(' ').map(n => n[0]).join('')}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

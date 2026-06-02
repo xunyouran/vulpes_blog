@@ -1,0 +1,98 @@
+{
+  "$ref": "#/definitions/blog",
+  "definitions": {
+    "blog": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "maxLength": 120,
+          "errorMessage": {
+            "maxLength": "Title must be under 120 characters"
+          }
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 200,
+          "errorMessage": {
+            "maxLength": "Description must be under 200 characters"
+          }
+        },
+        "pubDate": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "type": "integer",
+              "format": "unix-time"
+            }
+          ]
+        },
+        "updatedDate": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "type": "integer",
+              "format": "unix-time"
+            }
+          ]
+        },
+        "heroImage": {
+          "type": "string"
+        },
+        "heroImageAlt": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "category": {
+          "type": "string",
+          "default": "general"
+        },
+        "draft": {
+          "type": "boolean",
+          "default": false
+        },
+        "featured": {
+          "type": "boolean",
+          "default": false
+        },
+        "canonicalURL": {
+          "type": "string",
+          "format": "uri"
+        },
+        "ogImage": {
+          "type": "string"
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "description",
+        "pubDate"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+import { AUTHOR_NAME, AUTHOR_BIO, AUTHOR_AVATAR, TECH_STACK } from '../consts';
+
+const categories = [...new Set(TECH_STACK.map((t) => t.category))];
+---
+
+<BaseLayout title="关于" description={`关于 ${AUTHOR_NAME} — ${AUTHOR_BIO}`}>
+  <div class="max-w-3xl mx-auto py-8">
+    <!-- Profile Section -->
+    <section class="mb-16">
+      <div class="flex flex-col sm:flex-row items-center sm:items-start gap-8">
+        <!-- Avatar -->
+        <div class="w-32 h-32 rounded-full bg-[var(--color-bg-secondary)] border-2 border-[var(--color-border)] overflow-hidden flex-shrink-0">
+          <div class="w-full h-full flex items-center justify-center text-4xl font-bold text-[var(--color-text-tertiary)] bg-[var(--color-bg-tertiary)]">
+            {AUTHOR_NAME.split(' ').map(n => n[0]).join('')}
+          </div>
+        </div>
+
+        <div class="text-center sm:text-left">
+          <h1 class="text-3xl sm:text-4xl font-bold text-[var(--color-text-primary)] mb-3">
+            {AUTHOR_NAME}
+          </h1>
+          <p class="text-lg text-[var(--color-text-secondary)] leading-relaxed mb-4">
+            {AUTHOR_BIO}
+          </p>
+          <SocialLinks variant="compact" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Tech Stack -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-bold text-[var(--color-text-primary)] mb-6">
+        技术栈
+      </h2>
+      {
+        categories.map((category) => (
+          <div class="mb-6">
+            <h3 class="text-sm font-semibold text-[var(--color-text-tertiary)] uppercase tracking-wider mb-3">
+              {category}
+            </h3>
+            <div class="flex flex-wrap gap-2">
+              {
+                TECH_STACK.filter((t) => t.category === category).map((tech) => (
+                  <span class="inline-flex items-center px-3 py-1.5 rounded-lg bg-[var(--color-bg-secondary)] border border-[var(--color-border)] text-sm text-[var(--color-text-primary)]">
+                    {tech.name}
+                  </span>
+                ))
+              }
+            </div>
+          </div>
+        ))
+      }
+    </section>
+
+    <!-- About the Blog -->
+    <section>
+      <h2 class="text-2xl font-bold text-[var(--color-text-primary)] mb-4">
+        关于本站
+      </h2>
+      <div class="prose dark:prose-invert max-w-none">
+        <p class="text-[var(--color-text-secondary)] leading-relaxed">
+          这里是我记录学习历程、分享实用教程、探讨日常所用技术的空间。
+          从 Python 异步编程到 Linux 命令行技巧，我希望写出对同行开发者有帮助的内容。
+        </p>
+        <p class="text-[var(--color-text-secondary)] leading-relaxed">
+          本站使用 <strong>Astro</strong> 和 <strong>Tailwind CSS</strong> 构建，部署在 Vercel 上。
+          所有内容以 Markdown 编写，完整源码托管在 GitHub。
+        </p>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

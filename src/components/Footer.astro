@@ -1,0 +1,26 @@
+---
+import SocialLinks from './SocialLinks.astro';
+import { SITE_TITLE, AUTHOR_NAME } from '../consts';
+---
+
+<footer class="border-t border-[var(--color-border)] bg-[var(--color-bg-secondary)]">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+      <!-- Copyright -->
+      <p class="text-sm text-[var(--color-text-tertiary)]">
+        &copy; {new Date().getFullYear()} {SITE_TITLE} &mdash; 基于
+        <a
+          href="https://astro.build"
+          class="text-[var(--color-accent)] hover:underline"
+          target="_blank"
+          rel="noopener noreferrer"
+        >Astro</a
+        >
+        构建
+      </p>
+
+      <!-- Social Links -->
+      <SocialLinks variant="compact" />
+    </div>
+  </div>
+</footer>
