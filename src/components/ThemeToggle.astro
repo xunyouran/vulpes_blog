@@ -1,12 +1,10 @@
 <button
-  id="theme-toggle"
-  class="p-2 rounded-lg text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
+  class="theme-toggle-btn p-2 rounded-lg text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
   aria-label="切换暗黑模式"
   title="切换暗黑模式"
 >
-  <!-- Sun icon (shown in dark mode) -->
+  <!-- Sun icon (显示于暗黑模式) -->
   <svg
-    id="sun-icon"
     class="h-5 w-5 hidden dark:block"
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
@@ -21,9 +19,8 @@
     />
   </svg>
 
-  <!-- Moon icon (shown in light mode) -->
+  <!-- Moon icon (显示于亮色模式) -->
   <svg
-    id="moon-icon"
     class="h-5 w-5 block dark:hidden"
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
@@ -39,12 +36,12 @@
   </svg>
 </button>
 
-<script>
-  const toggle = document.getElementById('theme-toggle');
-  const html = document.documentElement;
-
-  toggle?.addEventListener('click', () => {
-    const isDark = html.classList.toggle('dark');
+<script is:inline>
+  // 使用事件委托 + class 选择器，解决重复 ID 和 ViewTransitions 导航问题
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.theme-toggle-btn');
+    if (!btn) return;
+    const isDark = document.documentElement.classList.toggle('dark');
     localStorage.setItem('blog-theme', isDark ? 'dark' : 'light');
   });
 </script>

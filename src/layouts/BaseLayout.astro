@@ -24,6 +24,20 @@ const {
 
 const ogImage = image || `${SITE_URL}/og-image.png`;
 const pageUrl = canonicalURL || new URL(Astro.url.pathname, SITE_URL).href;
+
+// Pre-compute JSON-LD string to avoid is:inline processing issues
+const ldJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: SITE_TITLE,
+  url: SITE_URL,
+  description: SITE_DESCRIPTION,
+  author: {
+    '@type': 'Person',
+    name: AUTHOR_NAME,
+    url: SITE_URL,
+  },
+});
 ---
 
 <!doctype html>
@@ -76,20 +90,7 @@ const pageUrl = canonicalURL || new URL(Astro.url.pathname, SITE_URL).href;
     />
 
     <!-- JSON-LD Structured Data -->
-    <script type="application/ld+json" is:inline>
-      {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": {JSON.stringify(SITE_TITLE)},
-        "url": {JSON.stringify(SITE_URL)},
-        "description": {JSON.stringify(SITE_DESCRIPTION)},
-        "author": {
-          "@type": "Person",
-          "name": {JSON.stringify(AUTHOR_NAME)},
-          "url": {JSON.stringify(SITE_URL)}
-        }
-      }
-    </script>
+    <script type="application/ld+json" set:html={ldJson}></script>
   </head>
 
   <body
