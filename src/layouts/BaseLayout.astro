@@ -36,6 +36,9 @@ const pageUrl = canonicalURL || new URL(Astro.url.pathname, SITE_URL).href;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="alternate icon" href="/favicon.ico" />
 
+    <!-- Base URL for GitHub Pages subpath deployment -->
+    <base href="/vulpes_blog/" />
+
     <!-- View Transitions for SPA-like navigation -->
     <ViewTransitions fallback="animate" />
 

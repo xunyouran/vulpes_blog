@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { BASE } from '../consts';
 
 export interface Props {
   prev?: CollectionEntry<'blog'>;
@@ -16,7 +17,7 @@ const { prev, next } = Astro.props;
         <!-- Previous post (older) -->
         {prev ? (
           <a
-            href={`/blog/${prev.id}`}
+            href={`${BASE}blog/${prev.id}`}
             class="group flex flex-col p-4 rounded-lg border border-[var(--color-border)] hover:border-[var(--color-accent)] transition-colors"
           >
             <span class="text-xs text-[var(--color-text-tertiary)] mb-1">
@@ -33,7 +34,7 @@ const { prev, next } = Astro.props;
         {/* Next post (newer) */}
         {next ? (
           <a
-            href={`/blog/${next.id}`}
+            href={`${BASE}blog/${next.id}`}
             class="group flex flex-col p-4 rounded-lg border border-[var(--color-border)] hover:border-[var(--color-accent)] transition-colors text-right"
           >
             <span class="text-xs text-[var(--color-text-tertiary)] mb-1">

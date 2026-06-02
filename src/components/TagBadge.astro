@@ -5,8 +5,10 @@ export interface Props {
   size?: 'sm' | 'md';
 }
 
+import { BASE } from '../consts';
+
 const { tag, href, size = 'md' } = Astro.props;
-const tagHref = href || `/blog/tag/${tag.toLowerCase()}`;
+const tagHref = href || `${BASE}blog/tag/${tag.toLowerCase()}`;
 const sizeClasses = size === 'sm' ? 'text-xs px-2 py-0.5' : 'text-sm px-3 py-1';
 ---
 

@@ -1,8 +1,9 @@
 ---
 import ThemeToggle from './ThemeToggle.astro';
-import { SITE_TITLE, NAV_ITEMS } from '../consts';
+import { SITE_TITLE, NAV_ITEMS, BASE } from '../consts';
 
 const currentPath = Astro.url.pathname;
+const resolveHref = (path: string) => path === '/' ? BASE : `${BASE}${path.slice(1)}`;
 ---
 
 <header
@@ -12,7 +13,7 @@ const currentPath = Astro.url.pathname;
     <nav class="flex items-center justify-between h-16">
       <!-- Logo / Brand -->
       <a
-        href="/"
+        href={BASE}
         class="text-xl font-bold text-[var(--color-text-primary)] hover:text-[var(--color-accent)] transition-colors"
       >
         {SITE_TITLE}
@@ -26,7 +27,7 @@ const currentPath = Astro.url.pathname;
               (item.href !== '/' && currentPath.startsWith(item.href));
             return (
               <a
-                href={item.href}
+                href={resolveHref(item.href)}
                 class={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                   isActive
                     ? 'bg-[var(--color-accent-light)] text-[var(--color-accent)]'
@@ -69,7 +70,7 @@ const currentPath = Astro.url.pathname;
             (item.href !== '/' && currentPath.startsWith(item.href));
           return (
             <a
-              href={item.href}
+              href={resolveHref(item.href)}
               class={`block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                 isActive
                   ? 'bg-[var(--color-accent-light)] text-[var(--color-accent)]'

@@ -1,5 +1,5 @@
 ---
-import { AUTHOR_NAME, AUTHOR_BIO, AUTHOR_AVATAR } from '../consts';
+import { AUTHOR_NAME, AUTHOR_BIO, AUTHOR_AVATAR, BASE } from '../consts';
 
 export interface Props {
   title?: string;
@@ -26,7 +26,7 @@ const {
       </p>
       <div class="mt-8 flex flex-wrap gap-3 justify-center sm:justify-start">
         <a
-          href="/blog"
+          href={`${BASE}blog`}
           class="inline-flex items-center px-6 py-3 rounded-lg bg-[var(--color-accent)] text-white font-medium
                  hover:bg-[var(--color-accent-hover)] transition-colors shadow-sm"
         >
@@ -36,7 +36,7 @@ const {
           </svg>
         </a>
         <a
-          href="/about"
+          href={`${BASE}about`}
           class="inline-flex items-center px-6 py-3 rounded-lg border border-[var(--color-border)]
                  text-[var(--color-text-primary)] font-medium hover:bg-[var(--color-bg-secondary)] transition-colors"
         >

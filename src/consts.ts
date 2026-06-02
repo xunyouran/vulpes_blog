@@ -1,4 +1,5 @@
 // 网站全局常量 — 修改这里即可把博客变成你自己的
+export const BASE = '/vulpes_blog/';
 export const SITE_TITLE = 'DevBlog';
 export const SITE_DESCRIPTION = '一个关于 Python、Linux、Web 开发的技术博客，记录学习与成长的每一步。';
 export const SITE_URL = 'https://xunyouran.github.io/vulpes_blog/';
