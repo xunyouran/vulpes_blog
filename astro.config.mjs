@@ -8,7 +8,7 @@ export default defineConfig({
   // When deploying to GitHub Pages as a project site, set base to '/<repo-name>'
   // For Vercel or user site (username.github.io), leave as '/'
   site: 'https://xunyouran.github.io',
-  base: '/-vulpes_blog/',
+  base: '/vulpes_blog/',
   integrations: [
     tailwind(),
     sitemap(),
